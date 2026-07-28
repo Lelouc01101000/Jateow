@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jateow</title>
+    <link rel="icon" type="image/jpg" href="assets/images/Jateow_Logo.jpg">
+    <style>
+        :root {
+            --bg: #f5f0fa;
+            --surface: #ffffff;
+            --surface-alt: #f9f6fc;
+            --text: #2d1b3e;
+            --text-secondary: #5c4a6e;
+            --text-muted: #8a7a9a;
+            --border: #d8cce8;
+            --border-light: #e8ddf5;
+            --primary: #7c3aed;
+            --primary-hover: #6d28d9;
+            --primary-light: #ede0fc;
+            --primary-glow: rgba(124, 58, 237, 0.2);
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+            --danger-bg: #fee2e2;
+            --danger-glow: rgba(239, 68, 68, 0.25);
+            --shadow-sm: 0 1px 3px rgba(45, 27, 62, 0.06);
+            --shadow: 0 4px 16px rgba(45, 27, 62, 0.08);
+            --shadow-lg: 0 12px 32px rgba(45, 27, 62, 0.12);
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --transition: 0.2s ease;
+            --status-applied: #7c3aed;
+            --status-applied-bg: #ede0fc;
+            --status-interview: #f59e0b;
+            --status-interview-bg: #fef3c7;
+            --status-offer: #10b981;
+            --status-offer-bg: #d1fae5;
+            --status-rejected: #ef4444;
+            --status-rejected-bg: #fee2e2;
+            --status-saved: #6b7280;
+            --status-saved-bg: #f3f4f6;
+            --checkbox-bg: #ffffff;
+            --checkbox-border: #c4b5d9;
+            --selected-highlight: rgba(124, 58, 237, 0.06);
+        }
+
+        [data-theme="dark"] {
+            --bg: #1a1028;
+            --surface: #241a35;
+            --surface-alt: #2a1f3d;
+            --text: #e8ddf5;
+            --text-secondary: #c4b5d9;
+            --text-muted: #8b7aa5;
+            --border: #3d2e55;
+            --border-light: #33264a;
+            --primary: #a78bfa;
+            --primary-hover: #8b6cf7;
+            --primary-light: #2d2045;
+            --primary-glow: rgba(167, 139, 250, 0.25);
+            --danger: #f87171;
+            --danger-hover: #ef4444;
+            --danger-bg: #3d1f1f;
+            --danger-glow: rgba(248, 113, 113, 0.3);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.4);
+            --status-applied: #a78bfa;
+            --status-applied-bg: #2d2045;
+            --status-interview: #fbbf24;
+            --status-interview-bg: #3d2e18;
+            --status-offer: #34d399;
+            --status-offer-bg: #1a3a2a;
+            --status-rejected: #f87171;
+            --status-rejected-bg: #3d1f1f;
+            --status-saved: #9ca3af;
+            --status-saved-bg: #2a2a2f;
+            --checkbox-bg: #2a1f3d;
+            --checkbox-border: #5c4a6e;
+            --selected-highlight: rgba(167, 139, 250, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background var(--transition), color var(--transition);
+            line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background var(--transition), border-color var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        .header-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+            white-space: nowrap;
+            transition: color var(--transition);
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .theme-toggle {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+            flex-shrink: 0;
+        }
+        .theme-toggle:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: var(--primary-glow);
+        }
+        .theme-toggle:active {
+            transform: scale(0.94);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 16px 16px 40px;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 12px;
+            text-align: center;
+            transition: all var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-card .stat-num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            transition: color var(--transition);
+            line-height: 1.1;
+        }
+        .stat-card .stat-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            transition: color var(--transition);
+        }
+
+        /* Card */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            transition: color var(--transition);
+        }
+        .card-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+        .card-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: color var(--transition);
+            letter-spacing: 0.2px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--surface-alt);
+            color: var(--text);
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: all var(--transition);
+            outline: none;
+            resize: vertical;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+            background: var(--surface);
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a7a9a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: all var(--transition);
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px var(--primary-glow);
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 4px 16px var(--primary-glow);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-secondary);
+        }
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+            box-shadow: 0 2px 8px var(--danger-glow);
+        }
+        .btn-danger:hover {
+            background: var(--danger-hover);
+            box-shadow: 0 4px 16px var(--danger-glow);
+            transform: translateY(-1px);
+        }
+        .btn-danger:active {
+            transform: scale(0.97);
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+        }
+        .btn-xs {
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            border-radius: 5px;
+            letter-spacing: 0.3px;
+        }
+        .btn-danger-text {
+            background: transparent;
+            border: none;
+            color: var(--status-rejected);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all var(--transition);
+        }
+        .btn-danger-text:hover {
+            background: var(--status-rejected-bg);
+        }
+
+        /* Batch Toggle Button */
+        .batch-toggle-btn {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        .batch-toggle-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .batch-toggle-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px var(--primary-glow);
+        }
+        .batch-toggle-btn.active:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Batch Bar */
+        .batch-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            background: var(--surface-alt);
+            border: 1.5px solid var(--primary);
+            border-radius: var(--radius);
+            flex-wrap: wrap;
+            transition: all var(--transition);
+            animation: slideDown 0.2s ease;
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .batch-bar .select-all-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: color var(--transition);
+            user-select: none;
+        }
+        .batch-bar .select-all-wrapper:hover {
+            color: var(--primary);
+        }
+        .batch-bar .selected-count {
+            flex: 1;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: color var(--transition);
+            min-width: 60px;
+        }
+        .batch-bar .batch-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* Custom Checkbox */
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 2px solid var(--checkbox-border);
+            border-radius: 5px;
+            background: var(--checkbox-bg);
+            cursor: pointer;
+            position: relative;
+            transition: all var(--transition);
+            flex-shrink: 0;
+        }
+        .custom-checkbox:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+        .custom-checkbox:checked {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        .custom-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 6px;
+            height: 11px;
+            border: solid #fff;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Search & Filter */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .search-input {
+            flex: 1;
+            min-width: 180px;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--surface-alt);
+            color: var(--text);
+            font-size: 0.88rem;
+            font-family: inherit;
+            outline: none;
+            transition: all var(--transition);
+        }
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+            background: var(--surface);
+        }
+        .filter-select {
+            padding: 10px 32px 10px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--surface-alt);
+            color: var(--text);
+            font-size: 0.85rem;
+            font-family: inherit;
+            outline: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a7a9a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        /* Application List */
+        .app-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .app-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all var(--transition);
+            box-shadow: var(--shadow-sm);
+            cursor: default;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .app-item:hover {
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+        .app-item.selected {
+            border-color: var(--primary);
+            background: var(--selected-highlight);
+            box-shadow: 0 0 0 1px var(--primary-glow), var(--shadow-sm);
+        }
+        .app-item.selected:hover {
+            box-shadow: 0 0 0 1px var(--primary-glow), var(--shadow);
+        }
+        .app-checkbox-cell {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+        }
+        .app-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary);
+            flex-shrink: 0;
+            transition: all var(--transition);
+            letter-spacing: -0.5px;
+        }
+        .app-info {
+            flex: 1;
+            min-width: 120px;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .app-info .company {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text);
+            transition: color var(--transition);
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .app-info .role {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            transition: color var(--transition);
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .app-info .date {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+            margin-top: 1px;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .app-status {
+            flex-shrink: 0;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            transition: all var(--transition);
+        }
+        .status-applied {
+            background: var(--status-applied-bg);
+            color: var(--status-applied);
+        }
+        .status-interview {
+            background: var(--status-interview-bg);
+            color: var(--status-interview);
+        }
+        .status-offer {
+            background: var(--status-offer-bg);
+            color: var(--status-offer);
+        }
+        .status-rejected {
+            background: var(--status-rejected-bg);
+            color: var(--status-rejected);
+        }
+        .status-saved {
+            background: var(--status-saved-bg);
+            color: var(--status-saved);
+        }
+        .app-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .app-actions button {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 6px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            transition: all var(--transition);
+        }
+        .app-actions button:hover {
+            color: var(--primary);
+            border-color: var(--border);
+            background: var(--surface-alt);
+        }
+        .app-actions button.delete-btn:hover {
+            color: var(--status-rejected);
+            border-color: var(--status-rejected);
+            background: var(--status-rejected-bg);
+        }
+        .app-notes {
+            width: 100%;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-light);
+            display: none;
+            transition: color var(--transition);
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+        .app-item.expanded .app-notes {
+            display: block;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+        .empty-state .empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            opacity: 0.5;
+        }
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            animation: slideUp 0.25s ease;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text);
+            transition: color var(--transition);
+        }
+        .modal p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: color var(--transition);
+            line-height: 1.5;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .app-item {
+                padding: 12px 14px;
+                gap: 10px;
+            }
+            .app-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
+                border-radius: 8px;
+            }
+            .app-info .company {
+                font-size: 0.85rem;
+            }
+            .app-info .role {
+                font-size: 0.73rem;
+            }
+            .status-badge {
+                font-size: 0.65rem;
+                padding: 4px 10px;
+            }
+            .toolbar {
+                flex-direction: column;
+            }
+            .search-input {
+                min-width: 100%;
+            }
+            .filter-select {
+                width: 100%;
+            }
+            .header {
+                padding: 10px 14px;
+            }
+            .logo {
+                font-size: 1.1rem;
+            }
+            .card {
+                padding: 14px;
+            }
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.82rem;
+            }
+            .batch-bar {
+                gap: 8px;
+                padding: 10px 12px;
+            }
+            .batch-bar .selected-count {
+                font-size: 0.72rem;
+            }
+            .batch-bar .batch-actions {
+                gap: 6px;
+            }
+            .batch-bar .batch-actions .btn {
+                padding: 6px 10px;
+                font-size: 0.7rem;
+            }
+            .card-header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+        @media (max-width: 380px) {
+            .app-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .app-actions {
+                align-self: flex-end;
+                margin-top: -36px;
+            }
+            .app-status {
+                align-self: flex-start;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+            .stat-card {
+                padding: 10px 8px;
+            }
+            .stat-card .stat-num {
+                font-size: 1.3rem;
+            }
+            .stat-card .stat-label {
+                font-size: 0.65rem;
+            }
+            .batch-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .batch-bar .batch-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <span class="logo">Jateow</span>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle theme">
+                    <span id="themeIcon">&#9790;</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Stats -->
+        <div class="stats-row" id="statsRow">
+            <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total</div></div>
+            <div class="stat-card"><div class="stat-num" id="statApplied">0</div><div class="stat-label">Applied</div></div>
+            <div class="stat-card"><div class="stat-num" id="statInterview">0</div><div class="stat-label">Interviews</div></div>
+            <div class="stat-card"><div class="stat-num" id="statOffer">0</div><div class="stat-label">Offers</div></div>
+        </div>
+
+        <!-- Add Form Card -->
+        <div class="card" id="addFormCard">
+            <div class="card-header">
+                <span class="card-title" id="formTitle">Add New Application</span>
+                <button class="btn btn-outline btn-sm" id="cancelEditBtn" style="display:none;">Cancel</button>
+            </div>
+            <form id="appForm" autocomplete="off">
+                <input type="hidden" id="editId" value="">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" placeholder="e.g. Gover Corp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Position / Role</label>
+                        <input type="text" id="role" placeholder="e.g. Software Engineer" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateApplied">Date Applied</label>
+                        <input type="date" id="dateApplied" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="applied">Applied</option>
+                            <option value="interview">Interview</option>
+                            <option value="offer">Offer</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="saved">Saved</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label for="notes">Notes (optional)</label>
+                        <textarea id="notes" rows="2" placeholder="Notes about this application..."></textarea>
+                    </div>
+                </div>
+                <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Add Application</button>
+                    <button type="button" class="btn btn-outline btn-sm" id="clearFormBtn">Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Applications List Card -->
+        <div class="card" id="appListCard">
+            <div class="card-header">
+                <span class="card-title">Your Applications</span>
+                <div class="card-header-actions">
+                    <span class="card-subtitle" id="resultCount">0 entries</span>
+                    <button class="batch-toggle-btn" id="batchToggleBtn" title="Select multiple applications to delete">Batch Delete</button>
+                </div>
+            </div>
+            <div class="toolbar">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by company or role...">
+                <select class="filter-select" id="filterStatus">
+                    <option value="all">All Statuses</option>
+                    <option value="applied">Applied</option>
+                    <option value="interview">Interview</option>
+                    <option value="offer">Offer</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="saved">Saved</option>
+                </select>
+                <select class="filter-select" id="sortOrder">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="company">Company A-Z</option>
+                </select>
+            </div>
+            <!-- Batch Action Bar -->
+            <div class="batch-bar" id="batchBar" style="display:none;">
+                <label class="select-all-wrapper">
+                    <input type="checkbox" class="custom-checkbox" id="selectAllCheckbox">
+                    <span>Select All</span>
+                </label>
+                <span class="selected-count" id="selectedCount">0 selected</span>
+                <div class="batch-actions">
+                    <button class="btn btn-danger btn-sm" id="batchDeleteBtn">Delete Selected</button>
+                    <button class="btn btn-outline btn-sm" id="cancelBatchBtn">Cancel</button>
+                </div>
+            </div>
+            <div class="app-list" id="appList">
+                <div class="empty-state">
+                    <div class="empty-icon">&#128203;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal" style="display:none;">
+        <div class="modal">
+            <h3 id="deleteModalTitle">Delete Application</h3>
+            <p id="deleteModalMessage">Are you sure you want to delete this application? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="btn btn-outline btn-sm" id="cancelDeleteBtn">Cancel</button>
+                <button class="btn btn-danger btn-sm" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // --- State ---
+            const STORAGE_KEY = 'jobAppTracker_data';
+            const THEME_KEY = 'jobAppTracker_theme';
+            let applications = [];
+            let deleteTargetId = null;
+            let pendingBatchDelete = false;
+            let batchMode = false;
+            let selectedIds = new Set();
+
+            // --- DOM Refs ---
+            const $themeToggle = document.getElementById('themeToggle');
+            const $themeIcon = document.getElementById('themeIcon');
+            const $appForm = document.getElementById('appForm');
+            const $editId = document.getElementById('editId');
+            const $company = document.getElementById('company');
+            const $role = document.getElementById('role');
+            const $dateApplied = document.getElementById('dateApplied');
+            const $status = document.getElementById('status');
+            const $notes = document.getElementById('notes');
+            const $submitBtn = document.getElementById('submitBtn');
+            const $cancelEditBtn = document.getElementById('cancelEditBtn');
+            const $clearFormBtn = document.getElementById('clearFormBtn');
+            const $formTitle = document.getElementById('formTitle');
+            const $appList = document.getElementById('appList');
+            const $searchInput = document.getElementById('searchInput');
+            const $filterStatus = document.getElementById('filterStatus');
+            const $sortOrder = document.getElementById('sortOrder');
+            const $resultCount = document.getElementById('resultCount');
+            const $deleteModal = document.getElementById('deleteModal');
+            const $cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            const $confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const $deleteModalTitle = document.getElementById('deleteModalTitle');
+            const $deleteModalMessage = document.getElementById('deleteModalMessage');
+            const $addFormCard = document.getElementById('addFormCard');
+            const $statTotal = document.getElementById('statTotal');
+            const $statApplied = document.getElementById('statApplied');
+            const $statInterview = document.getElementById('statInterview');
+            const $statOffer = document.getElementById('statOffer');
+            const $batchToggleBtn = document.getElementById('batchToggleBtn');
+            const $batchBar = document.getElementById('batchBar');
+            const $selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            const $selectedCount = document.getElementById('selectedCount');
+            const $batchDeleteBtn = document.getElementById('batchDeleteBtn');
+            const $cancelBatchBtn = document.getElementById('cancelBatchBtn');
+
+            // --- Theme ---
+            function getTheme() {
+                return localStorage.getItem(THEME_KEY) || 'light';
+            }
+
+            function applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                $themeIcon.innerHTML = theme === 'dark' ? '&#9788;' : '&#9790;';
+                localStorage.setItem(THEME_KEY, theme);
+            }
+
+            function toggleTheme() {
+                const current = getTheme();
+                const next = current === 'dark' ? 'light' : 'dark';
+                applyTheme(next);
+            }
+
+            // --- Data Persistence ---
+            function saveData() {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(applications));
+            }
+
+            function loadData() {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    try {
+                        applications = JSON.parse(raw);
+                    } catch (e) {
+                        applications = [];
+                    }
+                } else {
+                    applications = [];
+                }
+            }
+
+            // --- Helpers ---
+            function generateId() {
+                return 'app_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
+            }
+
+            function formatDate(dateStr) {
+                if (!dateStr) return '';
+                const d = new Date(dateStr + 'T00:00:00');
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+            }
+
+            function getInitials(name) {
+                if (!name) return '?';
+                const parts = name.trim().split(/\s+/);
+                if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+                return name.substring(0, 2).toUpperCase();
+            }
+
+            function getStatusClass(status) {
+                const map = {
+                    'applied': 'status-applied',
+                    'interview': 'status-interview',
+                    'offer': 'status-offer',
+                    'rejected': 'status-rejected',
+                    'saved': 'status-saved'
+                };
+                return map[status] || 'status-saved';
+            }
+
+            function getStatusLabel(status) {
+                const map = {
+                    'applied': 'Applied',
+                    'interview': 'Interview',
+                    'offer': 'Offer',
+                    'rejected': 'Rejected',
+                    'saved': 'Saved'
+                };
+                return map[status] || status;
+            }
+
+            function escapeHtml(str) {
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+
+            // --- Filtered & Sorted ---
+            function getFilteredAndSortedApps() {
+                let filtered = [...applications];
+                const searchTerm = $searchInput.value.toLowerCase().trim();
+                const statusFilter = $filterStatus.value;
+                const sort = $sortOrder.value;
+
+                if (searchTerm) {
+                    filtered = filtered.filter(app =>
+                        app.company.toLowerCase().includes(searchTerm) ||
+                        app.role.toLowerCase().includes(searchTerm) ||
+                        (app.notes && app.notes.toLowerCase().includes(searchTerm))
+                    );
+                }
+                if (statusFilter !== 'all') {
+                    filtered = filtered.filter(app => app.status === statusFilter);
+                }
+                if (sort === 'newest') {
+                    filtered.sort((a, b) => new Date(b.dateApplied) - new Date(a.dateApplied));
+                } else if (sort === 'oldest') {
+                    filtered.sort((a, b) => new Date(a.dateApplied) - new Date(b.dateApplied));
+                } else if (sort === 'company') {
+                    filtered.sort((a, b) => a.company.localeCompare(b.company));
+                }
+                return filtered;
+            }
+
+            function updateStats() {
+                const total = applications.length;
+                const applied = applications.filter(a => a.status === 'applied').length;
+                const interview = applications.filter(a => a.status === 'interview').length;
+                const offer = applications.filter(a => a.status === 'offer').length;
+                $statTotal.textContent = total;
+                $statApplied.textContent = applied;
+                $statInterview.textContent = interview;
+                $statOffer.textContent = offer;
+            }
+
+            function updateBatchBar() {
+                if (!batchMode) {
+                    $batchBar.style.display = 'none';
+                    return;
+                }
+                $batchBar.style.display = 'flex';
+                const filtered = getFilteredAndSortedApps();
+                const filteredIds = filtered.map(a => a.id);
+                const selectedInFiltered = filteredIds.filter(id => selectedIds.has(id));
+                $selectedCount.textContent = selectedInFiltered.length + ' selected';
+
+                if (filteredIds.length === 0) {
+                    $selectAllCheckbox.checked = false;
+                    $selectAllCheckbox.indeterminate = false;
+                } else if (selectedInFiltered.length === filteredIds.length) {
+                    $selectAllCheckbox.checked = true;
+                    $selectAllCheckbox.indeterminate = false;
+                } else if (selectedInFiltered.length > 0) {
+                    $selectAllCheckbox.checked = false;
+                    $selectAllCheckbox.indeterminate = true;
+                } else {
+                    $selectAllCheckbox.checked = false;
+                    $selectAllCheckbox.indeterminate = false;
+                }
+            }
+
+            // --- Render ---
+            function renderApplications() {
+                const filtered = getFilteredAndSortedApps();
+                $resultCount.textContent = filtered.length + ' ' + (filtered.length === 1 ? 'entry' : 'entries');
+                updateStats();
+
+                if (filtered.length === 0) {
+                    $appList.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">&#128203;</div>
+                            <p>No applications.</p>
+                        </div>`;
+                    updateBatchBar();
+                    return;
+                }
+
+                $appList.innerHTML = filtered.map(app => {
+                    const statusClass = getStatusClass(app.status);
+                    const statusLabel = getStatusLabel(app.status);
+                    const initials = getInitials(app.company);
+                    const dateFormatted = formatDate(app.dateApplied);
+                    const notesHtml = app.notes ?
+                        `<div class="app-notes">${escapeHtml(app.notes)}</div>` : '';
+                    const isSelected = selectedIds.has(app.id);
+                    const selectedClass = (batchMode && isSelected) ? ' selected' : '';
+                    const checkboxHtml = batchMode ?
+                        `<div class="app-checkbox-cell">
+                            <input type="checkbox" class="custom-checkbox app-item-checkbox" data-id="${app.id}" ${isSelected ? 'checked' : ''}>
+                        </div>` : '';
+                    const actionsHtml = !batchMode ?
+                        `<div class="app-actions">
+                            <button class="edit-btn" data-id="${app.id}" title="Edit">Edit</button>
+                            <button class="delete-btn" data-id="${app.id}" title="Delete">Del</button>
+                        </div>` : '';
+
+                    return `
+                        <div class="app-item${selectedClass}" data-id="${app.id}">
+                            ${checkboxHtml}
+                            <div class="app-icon">${initials}</div>
+                            <div class="app-info">
+                                <div class="company">${escapeHtml(app.company)}</div>
+                                <div class="role">${escapeHtml(app.role)}</div>
+                                <div class="date">${dateFormatted}</div>
+                            </div>
+                            <div class="app-status">
+                                <span class="status-badge ${statusClass}">${statusLabel}</span>
+                            </div>
+                            ${actionsHtml}
+                            ${notesHtml}
+                        </div>`;
+                }).join('');
+
+                // Attach event listeners
+                if (!batchMode) {
+                    $appList.querySelectorAll('.edit-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const id = btn.getAttribute('data-id');
+                            startEdit(id);
+                        });
+                    });
+                    $appList.querySelectorAll('.delete-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const id = btn.getAttribute('data-id');
+                            openDeleteModal(id);
+                        });
+                    });
+                    $appList.querySelectorAll('.app-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            item.classList.toggle('expanded');
+                        });
+                    });
+                } else {
+                    $appList.querySelectorAll('.app-item').forEach(item => {
+                        item.addEventListener('click', (e) => {
+                            if (e.target.classList.contains('custom-checkbox') || e.target.closest('.app-checkbox-cell')) {
+                                return;
+                            }
+                            const id = item.getAttribute('data-id');
+                            toggleSelectItem(id);
+                        });
+                    });
+                    $appList.querySelectorAll('.app-item-checkbox').forEach(cb => {
+                        cb.addEventListener('change', (e) => {
+                            e.stopPropagation();
+                            const id = cb.getAttribute('data-id');
+                            if (cb.checked) {
+                                selectedIds.add(id);
+                            } else {
+                                selectedIds.delete(id);
+                            }
+                            updateBatchBar();
+                            updateItemSelectedState(id);
+                        });
+                        cb.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                        });
+                    });
+                }
+
+                updateBatchBar();
+            }
+
+            function updateItemSelectedState(id) {
+                const item = $appList.querySelector(`.app-item[data-id="${id}"]`);
+                if (!item) return;
+                if (selectedIds.has(id)) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+                const cb = item.querySelector('.app-item-checkbox');
+                if (cb) {
+                    cb.checked = selectedIds.has(id);
+                }
+            }
+
+            function toggleSelectItem(id) {
+                if (selectedIds.has(id)) {
+                    selectedIds.delete(id);
+                } else {
+                    selectedIds.add(id);
+                }
+                updateBatchBar();
+                updateItemSelectedState(id);
+            }
+
+            function selectAllFiltered() {
+                const filtered = getFilteredAndSortedApps();
+                filtered.forEach(app => selectedIds.add(app.id));
+                renderApplications();
+            }
+
+            function deselectAllFiltered() {
+                const filtered = getFilteredAndSortedApps();
+                filtered.forEach(app => selectedIds.delete(app.id));
+                renderApplications();
+            }
+
+            // --- Batch Mode ---
+            function enterBatchMode() {
+                batchMode = true;
+                selectedIds.clear();
+                $batchToggleBtn.textContent = 'Exit Batch';
+                $batchToggleBtn.classList.add('active');
+                $batchBar.style.display = 'flex';
+                renderApplications();
+            }
+
+            function exitBatchMode() {
+                batchMode = false;
+                selectedIds.clear();
+                $batchToggleBtn.textContent = 'Batch Delete';
+                $batchToggleBtn.classList.remove('active');
+                $batchBar.style.display = 'none';
+                renderApplications();
+            }
+
+            function toggleBatchMode() {
+                if (batchMode) {
+                    exitBatchMode();
+                } else {
+                    enterBatchMode();
+                }
+            }
+
+            function openBatchDeleteModal() {
+                const count = selectedIds.size;
+                if (count === 0) return;
+                pendingBatchDelete = true;
+                deleteTargetId = null;
+                $deleteModalTitle.textContent = 'Delete Applications';
+                $deleteModalMessage.textContent = 'Are you sure you want to delete ' + count + ' selected application' + (count === 1 ? '' : 's') + '? This action cannot be undone.';
+                $deleteModal.style.display = 'flex';
+            }
+
+            function confirmBatchDelete() {
+                if (pendingBatchDelete && selectedIds.size > 0) {
+                    applications = applications.filter(a => !selectedIds.has(a.id));
+                    if ($editId.value && selectedIds.has($editId.value)) {
+                        resetForm();
+                    }
+                    selectedIds.clear();
+                    saveData();
+                    exitBatchMode();
+                    renderApplications();
+                }
+                closeDeleteModal();
+            }
+
+            // --- Form Handling ---
+            function resetForm() {
+                $appForm.reset();
+                $editId.value = '';
+                $submitBtn.textContent = 'Add Application';
+                $formTitle.textContent = 'Add New Application';
+                $cancelEditBtn.style.display = 'none';
+                $dateApplied.value = new Date().toISOString().split('T')[0];
+            }
+
+            function startEdit(id) {
+                const app = applications.find(a => a.id === id);
+                if (!app) return;
+                $editId.value = app.id;
+                $company.value = app.company;
+                $role.value = app.role;
+                $dateApplied.value = app.dateApplied;
+                $status.value = app.status;
+                $notes.value = app.notes || '';
+                $submitBtn.textContent = 'Update Application';
+                $formTitle.textContent = 'Edit Application';
+                $cancelEditBtn.style.display = 'inline-flex';
+                $addFormCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                $company.focus();
+            }
+
+            function handleFormSubmit(e) {
+                e.preventDefault();
+                const id = $editId.value;
+                const data = {
+                    company: $company.value.trim(),
+                    role: $role.value.trim(),
+                    dateApplied: $dateApplied.value,
+                    status: $status.value,
+                    notes: $notes.value.trim(),
+                };
+                if (!data.company || !data.role || !data.dateApplied) return;
+
+                if (id) {
+                    const idx = applications.findIndex(a => a.id === id);
+                    if (idx !== -1) {
+                        applications[idx] = { ...applications[idx], ...data };
+                    }
+                } else {
+                    applications.push({ id: generateId(), ...data });
+                }
+                saveData();
+                resetForm();
+                renderApplications();
+            }
+
+            // --- Delete Modal ---
+            function openDeleteModal(id) {
+                deleteTargetId = id;
+                pendingBatchDelete = false;
+                $deleteModalTitle.textContent = 'Delete Application';
+                $deleteModalMessage.textContent = 'Are you sure you want to delete this application? This action cannot be undone.';
+                $deleteModal.style.display = 'flex';
+            }
+
+            function closeDeleteModal() {
+                deleteTargetId = null;
+                pendingBatchDelete = false;
+                $deleteModal.style.display = 'none';
+            }
+
+            function confirmDelete() {
+                if (pendingBatchDelete) {
+                    confirmBatchDelete();
+                    return;
+                }
+                if (deleteTargetId) {
+                    selectedIds.delete(deleteTargetId);
+                    applications = applications.filter(a => a.id !== deleteTargetId);
+                    saveData();
+                    if ($editId.value === deleteTargetId) {
+                        resetForm();
+                    }
+                    renderApplications();
+                }
+                closeDeleteModal();
+            }
+
+            // --- Event Listeners ---
+            $themeToggle.addEventListener('click', toggleTheme);
+            $appForm.addEventListener('submit', handleFormSubmit);
+            $clearFormBtn.addEventListener('click', resetForm);
+            $cancelEditBtn.addEventListener('click', resetForm);
+            $searchInput.addEventListener('input', renderApplications);
+            $filterStatus.addEventListener('change', renderApplications);
+            $sortOrder.addEventListener('change', renderApplications);
+            $cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+            $confirmDeleteBtn.addEventListener('click', confirmDelete);
+            $deleteModal.addEventListener('click', function(e) {
+                if (e.target === $deleteModal) closeDeleteModal();
+            });
+            $batchToggleBtn.addEventListener('click', toggleBatchMode);
+            $cancelBatchBtn.addEventListener('click', exitBatchMode);
+            $batchDeleteBtn.addEventListener('click', function() {
+                if (selectedIds.size > 0) {
+                    openBatchDeleteModal();
+                }
+            });
+            $selectAllCheckbox.addEventListener('change', function() {
+                if ($selectAllCheckbox.checked) {
+                    selectAllFiltered();
+                } else {
+                    deselectAllFiltered();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if ($deleteModal.style.display === 'flex') {
+                        closeDeleteModal();
+                    } else if (batchMode) {
+                        exitBatchMode();
+                    }
+                }
+            });
+
+            // --- Init ---
+            function init() {
+                applyTheme(getTheme());
+                loadData();
+                $dateApplied.value = new Date().toISOString().split('T')[0];
+                renderApplications();
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>
