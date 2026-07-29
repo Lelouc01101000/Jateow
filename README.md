@@ -1,6 +1,6 @@
 # Jateow 
 
-Jateow is a job Application Tracker, client side web application for tracking job applications. Built as a single HTML file with built in data persistence using localStorage.
+Jateow is a job Application Tracker. Built as a single HTML file with built in data persistence using localStorage.
 
 ## Overview
 
