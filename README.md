@@ -2,7 +2,7 @@
 
 Jateow is a job Application Tracker. Built as a single HTML file with built in data persistence using localStorage.
 
-Available at [https://lelouc01101000.github.io/Jateow/](https://lelouc01101000.github.io/Jateow/) 
+Available at: [https://lelouc01101000.github.io/Jateow/](https://lelouc01101000.github.io/Jateow/) 
 ## Overview
 
 Jateow is a job application tracking tool that allows users to add, edit, delete, and filter job applications. All data is stored locally in the browser, requiring no server or database setup.
